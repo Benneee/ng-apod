@@ -1,0 +1,87 @@
+<app-loader [isLoading]="isLoading"></app-loader>
+
+<div class="container-fluid py-3">
+  <nav aria-label="breadcrumb" *ngIf="apodsList.length > 0 && !isLoading">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">APODs</li>
+    </ol>
+  </nav>
+
+  <div
+    class="justify-content-between mt-4 row d-flex"
+    *ngIf="apodsList.length > 0 && !isLoading"
+  >
+    <div class="col-md-4">
+      <h5 class="mb-0 font-weight-bold">Filter APODS by date range</h5>
+    </div>
+
+    <div class="col-md-8 d-none d-md-block">
+      <div class="justify-content-end d-flex flex-end">
+        <li>
+          Start date: <input type="date" (change)="getStartDate($event)" />
+        </li>
+        <li class="ml-md-3 mt-3 mt-md-0">
+          End Date: <input type="date" (change)="getEndDate($event)" />
+        </li>
+      </div>
+    </div>
+
+    <div class="col-md-8 d-md-none d-block">
+      <div class="justify-content-end d-flex-md flex-end">
+        <li>
+          Start date: <input type="date" (change)="getStartDate($event)" />
+        </li>
+        <li class="ml-md-3 mt-3 mt-md-0">
+          End Date: <input type="date" (change)="getEndDate($event)" />
+        </li>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4" *ngIf="apodsList.length > 0 && !isLoading">
+    <div class="row">
+      <div class="col-md-6" *ngFor="let apod of apodsList">
+        <div class="row my-3">
+          <div class="col-md-3">
+            <img
+              [src]="apod?.url"
+              class="img-fluid apod-img"
+              loading="lazy"
+              [alt]="apod?.title"
+            />
+          </div>
+          <div class="col-md-9 align-self-center">
+            <h6 class="mb-2 font-weight-bold">{{ apod?.title }}</h6>
+            <p><i class="fa fa-calendar"></i> Posted {{ apod?.date | date }}</p>
+            <button
+              class="btn btn-dark"
+              [routerLink]="['/', 'apod', apod.date]"
+            >
+              See details &rarr;
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4" *ngIf="apodsList.length === 0 && !isLoading">
+    <div class="col-md-4 offset-md-4">
+      <div class="card p-3 border-0 text-center">
+        <div class="card-body">
+          <img
+            src="../../../assets/images/undraw_void_3ggu.svg"
+            class="empty-state-img"
+            alt="No data"
+          />
+          <h5 class="mt-4">
+            No astronomy pictures of the day for you at the moment
+          </h5>
+          <button class="btn btn-lg btn-dark" (click)="getApods()">
+            Reload <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
