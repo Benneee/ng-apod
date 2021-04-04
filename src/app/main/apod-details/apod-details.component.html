@@ -1,0 +1,44 @@
+<app-loader [isLoading]="isLoading"></app-loader>
+
+<div class="container-fluid py-3">
+  <nav aria-label="breadcrumb" class="d-md-block d-none">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+      <li
+        class="breadcrumb-item active"
+        aria-current="page"
+        *ngIf="apodDetails !== null"
+      >
+        {{ apodDetails?.title }}
+      </li>
+      <li
+        class="breadcrumb-item active"
+        aria-current="page"
+        *ngIf="apodDetails === null"
+      >
+        {{ apodDate | date }}
+      </li>
+    </ol>
+  </nav>
+
+  <div class="row py-4">
+    <div class="col-md-4">
+      <img
+        [src]="apodDetails?.url"
+        class="img-fluid"
+        loading="lazy"
+        [alt]="apodDetails?.title"
+      />
+    </div>
+    <div class="col-md-8 align-self-center">
+      <h5 class="font-weight-bold">{{ apodDetails?.title }}</h5>
+      <p>
+        <i class="fa fa-calendar"></i> Posted {{ apodDetails?.date | date }}
+      </p>
+
+      <h6>
+        {{ apodDetails?.explanation }}
+      </h6>
+    </div>
+  </div>
+</div>
